@@ -18,20 +18,25 @@ public class PersonsDAO {
 
     public static void createPerson() {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
+        session.beginTransaction(); // begin;
         PersonsEntity personsEntity = new PersonsEntity();
         personsEntity.setName("Lisa");
         personsEntity.setAge(20);
-        session.persist(personsEntity);
-        session.getTransaction().commit();
+        session.persist(personsEntity);  // insert
+        session.getTransaction().commit(); // commit
     }
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread.sleep(5000);
+        sessionFactory.close();
+    }
+
 
     public static PersonsEntity getById(int id) {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
-        PersonsEntity personsEntity = session.get(PersonsEntity.class, id);
-        return personsEntity;
+        return session.get(PersonsEntity.class, id);
     }
 
     public static void updatePerson(int id, String name, int age) {
@@ -55,9 +60,4 @@ public class PersonsDAO {
 
         }
     }
-
-    public static void main(String[] args) {
-        createPerson();
-    }
-
 }
